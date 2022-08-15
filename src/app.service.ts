@@ -4,8 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
   getHello(): any {
     return {
-      key: 'value',
-      msg: 'Hello World!',
+      message: 'welcome to CapeOn API',
     };
   }
 }

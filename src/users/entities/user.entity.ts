@@ -11,51 +11,45 @@ import {
 @Entity('user', { schema: 'public' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  public id!: string;
 
   @Column()
-  public firstname: string;
+  public firstname!: string;
 
   @Column({ nullable: true })
-  public lastname: string;
-
-  @Exclude()
-  @Column()
-  public email: string;
+  public lastname?: string;
 
   @Exclude()
   @Column()
-  public password: string;
+  public email!: string;
+
+  @Exclude()
+  @Column()
+  public password!: string;
 
   @Column({ nullable: true })
-  public avatar: string;
+  public avatar?: string;
 
   @Column({ nullable: true })
-  public phone: string;
+  public phone?: string;
 
   @Exclude()
   @Column({ nullable: true })
-  public rememberToken: string;
+  public rememberToken?: string;
 
   @Exclude()
-  @Column({
-    nullable: true,
-    // type: 'timestamp',
-  })
-  public verifiedAt: Date;
+  @Column({ nullable: true })
+  public verifiedAt?: Date;
 
   @Expose()
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP()',
-  })
-  public createdAt: Date;
+  @CreateDateColumn()
+  public createdAt!: Date;
 
   @Exclude()
   @UpdateDateColumn()
-  public updatedAt: Date;
+  public updatedAt!: Date;
 
   @Exclude()
-  @DeleteDateColumn()
-  public deletedAt: Date;
+  @DeleteDateColumn({ nullable: true })
+  public deletedAt?: Date;
 }

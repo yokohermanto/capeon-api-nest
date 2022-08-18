@@ -1,0 +1,13 @@
+export const errorMap = {
+  BAD_REQUEST: {
+    INVALID_UUID: 40005,
+  },
+  FORBIDDEN: {
+    FORBIDDEN_GENERAL: 40301,
+  },
+  NOT_FOUND: {
+    RECORD_NOT_FOUND: 40401,
+    UPDATE_NOT_FOUND: 40402,
+    DELETE_NOT_FOUND: 40403,
+  },
+};

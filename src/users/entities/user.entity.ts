@@ -23,7 +23,7 @@ export class User {
   @Column()
   public email!: string;
 
-  @Exclude()
+  @Exclude({ toPlainOnly: true })
   @Column()
   public password!: string;
 

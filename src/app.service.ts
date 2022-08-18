@@ -1,7 +1,9 @@
+import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
+  constructor(private readonly configService: ConfigService) {}
   getResponse(): object {
     return {
       message: 'welcome to CapeOn API',
@@ -9,7 +11,7 @@ export class AppService {
         app: 'api',
         ver: '1.0.0',
         env: {
-          nest_env_check: process.env.NEST_ENV_CHECK || 'empty',
+          node_env: this.configService.get('NODE_ENV') || 'empty',
         },
         dev: ['@cacing69'],
       },

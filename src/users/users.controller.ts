@@ -33,11 +33,7 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id', UuidPipe) id: string) {
-    try {
-      return this.usersService.findOne(id);
-    } catch (e: any) {
-      console.log('sini', e);
-    }
+    return this.usersService.findOne(id);
   }
 
   @Patch(':id')

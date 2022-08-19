@@ -1,4 +1,4 @@
-import { errorMap } from '../error.mapping';
+import { codeMapping } from '../code-mapping';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class InternalServerErrorException extends HttpException {
@@ -15,7 +15,7 @@ export class InternalServerErrorException extends HttpException {
 
     super(
       {
-        code: errorMap.INTERNAL_ERROR.INTERNAL_SERVER_ERROR,
+        code: codeMapping.INTERNAL_ERROR.INTERNAL_SERVER_ERROR,
         message: errorMessage || defaultErrorMessage,
         meta: null,
         data: null,

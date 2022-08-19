@@ -1,13 +1,20 @@
-export const errorMap = {
+export const codeMapping = {
   INTERNAL_ERROR: {
     INTERNAL_SERVER_ERROR: '50001',
+  },
+  SUCCESS: {
+    SUCCESS_LIST: '20001',
+    SUCCESS_CREATE: '20002',
+    SUCCESS_READ: '20003',
+    SUCCESS_UPDATE: '20004',
+    SUCCESS_DELETE: '20005',
   },
   BAD_REQUEST: {
     ALREADY_EXIST: '40004',
     INVALID_UUID: '40005',
   },
   UNPROCESSABLE_ENTITY: {
-    INVALID: '42201',
+    VALIDATE_FAILED: '42201',
   },
   FORBIDDEN: {
     FORBIDDEN_GENERAL: '40301',

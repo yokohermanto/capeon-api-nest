@@ -1,4 +1,10 @@
-import { baseResponse } from 'src/utils/helpers';
+import {
+  baseResponseDelete,
+  baseResponseList,
+  baseResponseRead,
+  baseResponseUpdate,
+  baseResponseCreate,
+} from 'src/utils/helpers';
 import { UuidPipe } from './../utils/pipes/uuid.pipe';
 import {
   Controller,
@@ -20,28 +26,32 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    return baseResponseCreate(await this.usersService.create(createUserDto));
   }
 
   @Get()
   async findAll() {
-    const message = 'list user';
-    return baseResponse(await this.usersService.findAll(), { message });
+    return baseResponseList(await this.usersService.findAll());
   }
 
   @Get(':id')
-  findOne(@Param('id', UuidPipe) id: string) {
-    return this.usersService.getById(id);
+  async findOne(@Param('id', UuidPipe) id: string) {
+    return baseResponseRead(await this.usersService.getById(id));
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
+  async update(
+    @Param('id', UuidPipe) id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return baseResponseUpdate(
+      await this.usersService.update(id, updateUserDto),
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+  async remove(@Param('id', UuidPipe) id: string) {
+    return baseResponseDelete(await this.usersService.remove(id));
   }
 }

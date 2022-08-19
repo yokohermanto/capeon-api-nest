@@ -1,4 +1,4 @@
-import { errorMap } from './../error.mapping';
+import { codeMapping } from '../code-mapping';
 import {
   ArgumentMetadata,
   HttpException,
@@ -16,7 +16,7 @@ export class UuidPipe implements PipeTransform<number, number> {
 
     throw new HttpException(
       {
-        statusCode: errorMap.BAD_REQUEST.INVALID_UUID,
+        statusCode: codeMapping.BAD_REQUEST.INVALID_UUID,
         message: 'bad request, invalid uuid',
       },
       HttpStatus.BAD_REQUEST,

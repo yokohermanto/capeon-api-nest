@@ -1,12 +1,15 @@
-import { errorMap } from './../utils/error.mapping';
+import { errorMap } from '../error.mapping';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class ForbiddenException extends HttpException {
   constructor() {
     super(
       {
-        statusCode: errorMap.FORBIDDEN.FORBIDDEN_GENERAL,
+        code: errorMap.FORBIDDEN.FORBIDDEN_GENERAL,
         message: 'forbidden',
+        data: null,
+        meta: null,
+        extra: null,
       },
       HttpStatus.FORBIDDEN,
     );

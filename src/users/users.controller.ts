@@ -33,7 +33,7 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id', UuidPipe) id: string) {
-    return this.usersService.findOne(id);
+    return this.usersService.getById(id);
   }
 
   @Patch(':id')

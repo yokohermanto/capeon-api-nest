@@ -20,10 +20,10 @@ export class User {
   public lastname?: string;
 
   @Exclude()
-  @Column()
+  @Column({ unique: true })
   public email!: string;
 
-  @Exclude({ toPlainOnly: true })
+  @Exclude()
   @Column()
   public password!: string;
 

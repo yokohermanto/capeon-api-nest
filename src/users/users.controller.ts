@@ -1,3 +1,4 @@
+import { baseResponse } from 'src/utils/helpers';
 import { UuidPipe } from './../utils/pipes/uuid.pipe';
 import {
   Controller,
@@ -7,8 +8,6 @@ import {
   Patch,
   Param,
   Delete,
-  UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,7 +16,6 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')
-@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -27,8 +25,9 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async findAll() {
+    const message = 'list user';
+    return baseResponse(await this.usersService.findAll(), { message });
   }
 
   @Get(':id')

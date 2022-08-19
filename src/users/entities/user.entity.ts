@@ -10,12 +10,15 @@ import {
 
 @Entity('user', { schema: 'public' })
 export class User {
+  @Expose()
   @PrimaryGeneratedColumn('uuid')
   public id!: string;
 
+  @Expose()
   @Column()
   public firstname!: string;
 
+  @Expose()
   @Column({ nullable: true })
   public lastname?: string;
 
@@ -27,9 +30,11 @@ export class User {
   @Column()
   public password!: string;
 
+  @Expose()
   @Column({ nullable: true })
   public avatar?: string;
 
+  @Expose()
   @Column({ nullable: true })
   public phone?: string;
 
@@ -41,7 +46,7 @@ export class User {
   @Column({ nullable: true })
   public verifiedAt?: Date;
 
-  @Expose()
+  @Exclude()
   @CreateDateColumn()
   public createdAt!: Date;
 

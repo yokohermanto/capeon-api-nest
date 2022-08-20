@@ -1,4 +1,5 @@
-import { BaseResponse } from 'src/utils/base-response';
+import { BaseResponse } from './base-response';
+
 import { codeMapping } from './code-mapping';
 export const baseResponse = (data: any, options?: any) => {
   return new BaseResponse(data, options);

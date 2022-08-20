@@ -4,12 +4,12 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from './utils/pipes/validation.pipe';
 import { ClassSerializerInterceptor } from '@nestjs/common';
 
-export async function bootstrap() {
+async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
     .setTitle('CapeOn API')
-    .setDescription('API description')
+    .setDescription('Lorem ipsum dolor sit  amet')
     .setVersion('1.0')
     .build();
 

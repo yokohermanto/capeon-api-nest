@@ -33,7 +33,7 @@ export class UsersService {
       await this.userRepository.save(data);
       return data;
     } catch (error: any) {
-      if (error?.code === POSTGRES_ERROR_CODE.UniqueViolation) {
+      if (error?.code === POSTGRES_ERROR_CODE.UNIQUE_VALIDATION) {
         throw new AlreadyExistException('email');
       }
       throw new InternalServerErrorException(error);

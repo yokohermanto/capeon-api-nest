@@ -1,3 +1,5 @@
+import { ERROR } from './../utils/error-code';
+import { AlreadyExistException } from './../utils/exceptions/already-exist.exceptions';
 import { InternalServerErrorException } from '../utils/exceptions/internal-server-error.exceptions';
 import {
   RecordNotFoundException,
@@ -11,8 +13,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
-import { AlreadyExistException } from 'src/utils/exceptions/already-exist.exceptions';
-import { ERROR } from 'src/utils/error-code';
 
 @Injectable()
 export class UsersService {

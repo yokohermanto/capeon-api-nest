@@ -11,8 +11,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
-import POSTGRES_ERROR_CODE from 'src/database/postgres-error-code.enum';
 import { AlreadyExistException } from 'src/utils/exceptions/already-exist.exceptions';
+import { ERROR } from 'src/utils/error-code';
 
 @Injectable()
 export class UsersService {
@@ -33,7 +33,7 @@ export class UsersService {
       await this.userRepository.save(data);
       return data;
     } catch (error: any) {
-      if (error?.code === POSTGRES_ERROR_CODE.UNIQUE_VALIDATION) {
+      if (error?.code === ERROR.POSTGRES.UNIQUE_VALIDATION) {
         throw new AlreadyExistException('email');
       }
       throw new InternalServerErrorException(error);

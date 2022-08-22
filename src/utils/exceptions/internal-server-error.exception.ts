@@ -15,7 +15,7 @@ export class InternalServerErrorException extends HttpException {
 
     super(
       {
-        code: codeMapping.INTERNAL_ERROR.INTERNAL_SERVER_ERROR,
+        code: codeMapping.INTERNAL_SERVER_ERROR,
         message: errorMessage || defaultErrorMessage,
         meta: null,
         data: null,

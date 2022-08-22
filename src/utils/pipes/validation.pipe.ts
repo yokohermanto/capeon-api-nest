@@ -1,7 +1,7 @@
-import { BadRequestException } from './../exceptions/bad-request.exceptions';
+import { UnprocessableEntityException } from './../exceptions/unprocessable-entity.exception';
 import { PipeTransform, Injectable, ArgumentMetadata } from '@nestjs/common';
 import { validate } from 'class-validator';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
@@ -10,7 +10,7 @@ export class ValidationPipe implements PipeTransform<any> {
       return value;
     }
 
-    const object = plainToClass(metatype, value);
+    const object = plainToInstance(metatype, value);
     const errors = await validate(object);
 
     if (errors.length > 0) {
@@ -20,7 +20,7 @@ export class ValidationPipe implements PipeTransform<any> {
         });
       });
 
-      throw new BadRequestException(errorsResponse.flat());
+      throw new UnprocessableEntityException(errorsResponse.flat());
     }
     return value;
   }

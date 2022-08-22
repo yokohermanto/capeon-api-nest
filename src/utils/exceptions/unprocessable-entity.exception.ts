@@ -1,17 +1,17 @@
 import { codeMapping } from '../code-mapping';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export class BadRequestException extends HttpException {
+export class UnprocessableEntityException extends HttpException {
   constructor(error?: any) {
     super(
       {
-        code: codeMapping.UNPROCESSABLE_ENTITY.VALIDATE_FAILED,
-        message: `there is an empty field. it can't be null`,
+        code: codeMapping.VALIDATE_FAILED,
+        message: `there is an empty field or invalid data`,
         data: null,
         meta: null,
         extra: error || null,
       },
-      HttpStatus.FORBIDDEN,
+      HttpStatus.UNPROCESSABLE_ENTITY,
     );
   }
 }

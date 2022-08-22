@@ -10,19 +10,14 @@ export type BaseResponseOption = {
 
 // @UseInterceptors(ClassSerializerInterceptor)
 export class BaseResponse {
-  // @Expose()
   code: string;
 
-  // @Expose()
   message: string;
 
-  // @Expose()
   data;
 
-  // @Expose()
   meta;
 
-  // @Expose()
   extra;
 
   constructor(dataResponse?: any, options?: BaseResponseOption) {

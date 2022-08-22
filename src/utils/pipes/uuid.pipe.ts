@@ -16,7 +16,7 @@ export class UuidPipe implements PipeTransform<number, number> {
 
     throw new HttpException(
       {
-        statusCode: codeMapping.BAD_REQUEST.INVALID_UUID,
+        statusCode: codeMapping.INVALID_UUID,
         message: 'bad request, invalid uuid',
       },
       HttpStatus.BAD_REQUEST,

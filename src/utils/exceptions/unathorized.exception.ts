@@ -1,17 +1,17 @@
 import { codeMapping } from '../code-mapping';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export class ForbiddenException extends HttpException {
+export class UnAuthorizedException extends HttpException {
   constructor() {
     super(
       {
-        code: codeMapping.FORBIDDEN.FORBIDDEN_GENERAL,
-        message: 'forbidden',
+        code: codeMapping.UNAUTHORIZED,
+        message: 'unauthorized',
         data: null,
         meta: null,
         extra: null,
       },
-      HttpStatus.FORBIDDEN,
+      HttpStatus.UNAUTHORIZED,
     );
   }
 }

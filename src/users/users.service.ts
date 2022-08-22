@@ -1,11 +1,11 @@
 import { ERROR } from './../utils/error-code';
-import { AlreadyExistException } from './../utils/exceptions/already-exist.exceptions';
-import { InternalServerErrorException } from '../utils/exceptions/internal-server-error.exceptions';
+import { AlreadyExistException } from '../utils/exceptions/already-exist.exception';
+import { InternalServerErrorException } from '../utils/exceptions/internal-server-error.exception';
 import {
   RecordNotFoundException,
   RecordNotFoundToDeleteException,
   RecordNotFoundToUpdateException,
-} from '../utils/exceptions/not-found.exceptions';
+} from '../utils/exceptions/not-found.exception';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -54,7 +54,7 @@ export class UsersService {
     if (data) {
       return data;
     }
-    throw new RecordNotFoundException();
+    throw new RecordNotFoundException('user with this id does not exist');
   }
 
   async getByEmail(email: string) {

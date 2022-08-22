@@ -1,4 +1,3 @@
-import { ConfigService } from '@nestjs/config';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { BadRequestException } from '../utils/exceptions/bad-request.exception';
 import { RegisterAuthDto } from './dto/register-auth.dto';
@@ -11,7 +10,6 @@ export class AuthService {
   constructor(
     private readonly UsersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
   ) {}
   async register(registerAuthDto: RegisterAuthDto) {
     if (registerAuthDto.password != registerAuthDto.passwordConfirmation)

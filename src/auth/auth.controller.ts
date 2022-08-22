@@ -1,4 +1,3 @@
-import { ConfigService } from '@nestjs/config';
 import { baseResponse, baseResponseRead } from './../utils/helpers';
 import {
   Controller,

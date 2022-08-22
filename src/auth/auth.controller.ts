@@ -1,5 +1,4 @@
 import { ConfigService } from '@nestjs/config';
-// import { LocalAuthenticationGuard } from './../utils/guards/local-authentication.guard';
 import { baseResponse, baseResponseRead } from './../utils/helpers';
 import {
   Controller,
@@ -7,8 +6,6 @@ import {
   Body,
   HttpCode,
   HttpStatus,
-  Res,
-  UseGuards,
   Get,
   Req,
 } from '@nestjs/common';
@@ -16,16 +13,12 @@ import { AuthService } from './auth.service';
 import { RegisterAuthDto } from './dto/register-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
 import { Public } from 'src/utils/decorators/public.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @Post('register')
@@ -40,7 +33,7 @@ export class AuthController {
   @Public()
   @Post('login')
   // @UseGuards(LocalAuthenticationGuard)
-  async login(@Body() loginAuthDto: LoginAuthDto, @Res() response: Response) {
+  async login(@Body() loginAuthDto: LoginAuthDto) {
     const message = 'login success';
 
     const getToken = await this.authService.getToken(loginAuthDto);
@@ -48,29 +41,32 @@ export class AuthController {
     // return cookie;
     // console.debug(response.headers, cookie);
 
-    response.setHeader(
-      'Set-Cookie',
-      `Authentication=${getToken}; HttpOnly; Path=/; Max-Age=${await this.configService.get(
-        'JWT_EXPIRATION_TIME',
-      )}`,
-    );
+    // response.setHeader(
+    //   'Set-Cookie',
+    //   `Authentication=${getToken}; HttpOnly; Path=/; Max-Age=${await this.configService.get(
+    //     'JWT_EXPIRATION_TIME',
+    //   )}`,
+    // );
 
-    return response.send(
-      baseResponse({ accessToken: getToken, refreshToken: null }, { message }),
+    return baseResponse(
+      { accessToken: getToken, refreshToken: null },
+      { message },
     );
+    // response.send(
+    // );
   }
 
-  @Public()
-  @Post('logout')
-  async logOut(@Res() response: Response) {
-    const message = 'logout success';
+  // @Public()
+  // @Post('logout')
+  // async logOut() {
+  //   const message = 'logout success';
 
-    response.setHeader(
-      'Set-Cookie',
-      `Authentication=; HttpOnly; Path=/; Max-Age=0`,
-    );
-    return response.send(baseResponse(null, { message }));
-  }
+  //   response.setHeader(
+  //     'Set-Cookie',
+  //     `Authentication=; HttpOnly; Path=/; Max-Age=0`,
+  //   );
+  //   return response.send(baseResponse(null, { message }));
+  // }
 
   @Get('check')
   async check(@Req() request) {

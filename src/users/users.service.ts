@@ -8,7 +8,7 @@ import {
 } from '../utils/exceptions/not-found.exception';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -40,8 +40,18 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return this.userRepository.find();
+  async findAll() {
+    const data = await this.userRepository.find({
+      order: {
+        createdAt: 'DESC',
+        id: 'DESC',
+      },
+      take: 2,
+      where: {
+        id: LessThan('58d2222e-0bba-48f9-a92c-5de9597ad464'),
+      },
+    });
+    return data;
   }
 
   async getById(id: string) {

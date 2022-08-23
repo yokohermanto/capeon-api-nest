@@ -27,13 +27,13 @@ export class ErrorFilter extends BaseExceptionFilter {
         ? error.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    // console.debug(error);
+    console.debug(error);
 
     const getCode = error?.response?.statusCode || error?.response?.code || 500;
     const code = changeCode(getCode);
     const message = error?.response?.message || 'something went wrong';
     const extra =
-      error?.response?.extra || [error.stack?.split(':')[0]] || null;
+      error?.response?.extra || [error.stack?.split('at')[0]?.trim()] || null;
     const meta = null;
     const data = null;
 

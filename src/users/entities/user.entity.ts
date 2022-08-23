@@ -16,6 +16,9 @@ export class User {
 
   @Expose()
   @Column()
+  // @Transform(({ value, key, obj, type }) => {
+  //   return toTitleCase(value);
+  // })
   public firstname!: string;
 
   @Expose()

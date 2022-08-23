@@ -16,7 +16,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
           const token =
             request?.headers?.authorization?.replace('Bearer ', '')?.trim() ||
             request?.cookies?.Authentication;
-
           return token;
         },
       ]),

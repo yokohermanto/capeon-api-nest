@@ -11,10 +11,14 @@ export const baseResponseCreate = (data: any, module?: string) => {
   return baseResponse(data, { code, message });
 };
 
-export const baseResponseList = (data: any, module?: string) => {
-  const message = `list ${module || ''}`.trim();
+export const baseResponseList = (data: any, options?: any) => {
+  const message = options?.message || `list data`;
+  const meta = options?.meta || null;
   const code = codeMapping.SUCCESS_LIST;
-  return baseResponse(data, { code, message });
+
+  console.log(options);
+
+  return baseResponse(data, { code, message, meta });
 };
 
 export const baseResponseRead = (data: any, module?: string) => {
@@ -33,4 +37,21 @@ export const baseResponseDelete = (data: any, module?: string) => {
   const message = `success delete ${module || ''}`.trim();
   const code = codeMapping.SUCCESS_DELETE;
   return baseResponse(data, { code, message });
+};
+
+export const recursivelyStripNullValues = (value: unknown): unknown => {
+  if (Array.isArray(value)) {
+    return value.map(recursivelyStripNullValues);
+  }
+  if (value !== null && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, value]) => [
+        key,
+        recursivelyStripNullValues(value),
+      ]),
+    );
+  }
+  if (value !== null) {
+    return value;
+  }
 };

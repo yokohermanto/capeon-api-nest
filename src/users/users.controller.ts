@@ -16,6 +16,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -25,22 +26,25 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly userService: UsersService) {}
+
+  @Get()
+  async findAll(@Query() query) {
+    console.log(query);
+    const data = await this.userService.findAll();
+    const meta = { lastId: query?.lastId || null };
+    return baseResponseList(data, { meta });
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createUserDto: CreateUserDto) {
-    return baseResponseCreate(await this.usersService.create(createUserDto));
-  }
-
-  @Get()
-  async findAll() {
-    return baseResponseList(await this.usersService.findAll());
+    return baseResponseCreate(await this.userService.create(createUserDto));
   }
 
   @Get(':id')
   async findOne(@Param('id', UuidPipe) id: string) {
-    return baseResponseRead(await this.usersService.getById(id));
+    return baseResponseRead(await this.userService.getById(id));
   }
 
   @Patch(':id')
@@ -48,13 +52,11 @@ export class UsersController {
     @Param('id', UuidPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return baseResponseUpdate(
-      await this.usersService.update(id, updateUserDto),
-    );
+    return baseResponseUpdate(await this.userService.update(id, updateUserDto));
   }
 
   @Delete(':id')
   async remove(@Param('id', UuidPipe) id: string) {
-    return baseResponseDelete(await this.usersService.remove(id));
+    return baseResponseDelete(await this.userService.remove(id));
   }
 }

@@ -6,6 +6,7 @@ import { ValidationPipe as ValidatePipe } from './utils/pipes/validation.pipe';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { ErrorFilter } from './utils/filters/error.filter';
 import * as cookieParser from 'cookie-parser';
+import { TrimPipe } from './utils/pipes/trim.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,6 +22,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidatePipe());
   app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true }));
+  // app.useGlobalPipes(new TrimPipe());
   app.useGlobalInterceptors(new PostStatusInterceptor());
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.use(cookieParser());

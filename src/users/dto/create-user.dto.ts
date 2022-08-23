@@ -10,7 +10,6 @@ import {
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
-  @IsAlpha()
   firstname: string;
 
   @IsString()

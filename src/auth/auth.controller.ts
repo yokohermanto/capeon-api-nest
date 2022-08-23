@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { baseResponse, baseResponseRead } from './../utils/helpers';
 import {
   Controller,
@@ -13,11 +14,15 @@ import { RegisterAuthDto } from './dto/register-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/utils/decorators/public.decorator';
+import { ConfigService } from '@nestjs/config';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Public()
   @Post('register')
@@ -31,41 +36,33 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  // @UseGuards(LocalAuthenticationGuard)
-  async login(@Body() loginAuthDto: LoginAuthDto) {
-    const message = 'login success';
+  async login(@Body() loginAuthDto: LoginAuthDto, @Req() request: Request) {
+    const message = 'auth success';
 
     const getToken = await this.authService.getToken(loginAuthDto);
+    const exp = await this.configService.get('JWT_EXPIRATION_TIME');
 
-    // return cookie;
-    // console.debug(response.headers, cookie);
+    const cookie = `Authentication=${getToken}; HttpOnly; Path=/; Max-Age=${exp}`;
 
-    // response.setHeader(
-    //   'Set-Cookie',
-    //   `Authentication=${getToken}; HttpOnly; Path=/; Max-Age=${await this.configService.get(
-    //     'JWT_EXPIRATION_TIME',
-    //   )}`,
-    // );
+    request.res.setHeader('Set-Cookie', cookie);
 
     return baseResponse(
       { accessToken: getToken, refreshToken: null },
       { message },
     );
-    // response.send(
-    // );
   }
 
-  // @Public()
-  // @Post('logout')
-  // async logOut() {
-  //   const message = 'logout success';
+  @Public()
+  @Post('logout')
+  async logout(@Req() request: Request) {
+    const message = 'logout success';
 
-  //   response.setHeader(
-  //     'Set-Cookie',
-  //     `Authentication=; HttpOnly; Path=/; Max-Age=0`,
-  //   );
-  //   return response.send(baseResponse(null, { message }));
-  // }
+    request.res.setHeader(
+      'Set-Cookie',
+      `Authentication=; HttpOnly; Path=/; Max-Age=0`,
+    );
+    return baseResponse(null, { message });
+  }
 
   @Get('check')
   async check(@Req() request) {

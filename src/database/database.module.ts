@@ -20,6 +20,7 @@ import { join } from 'path';
         synchronize: Boolean(
           JSON.parse(configService.get('DATABASE_SYNCHRONIZE')),
         ),
+        logging: true,
         ssl: Boolean(JSON.parse(configService.get('DATABASE_SSL'))),
         // extra: {
         //   ssl: {
